@@ -1,0 +1,65 @@
+{% extends 'sbadmin/base.html' %}{% load static %} {% block content %}
+
+<!-- page heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">
+    Site
+  </h1>
+</div>
+
+<!-- table data -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table mr-2"></i> Site List</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>
+              <a href="/site/create"
+                class="btn btn-primary btn-sm btn-block">CREATE SITE</a>
+            </th>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for site in page_obj %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ site.name }}</td>
+            <td class="text-center">
+              <a href="/site/update/{{ site.id }}"
+                class="text-info mr-4" title="edit">
+                <i class="fas fa-edit"></i>
+              </a>
+
+              <a href="#" class="text-danger ml-4" title="delete">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% include 'core/pagination.html' %}
+
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

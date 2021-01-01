@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+  {% include 'sbadmin/components/head.html' %}
+
+<body id="pagetop">
+
+  <!-- page wrapper -->
+  <div id="wrapper">
+
+    <!-- sidebar -->
+    {% include 'sbadmin/components/sidebar.html' %}
+
+    <!-- content wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- main content -->
+      <div id="content">
+
+        <!-- top navbar -->
+        {% include 'sbadmin/components/navbar.html' %}
+        
+        <!-- begin page content -->
+        <div class="container-fluid">
+          {% block content %}
+          {% endblock content %}
+        </div>
+        <!-- end begin page content -->
+
+      </div>
+      <!-- end main content -->
+
+      <!-- footer -->
+      {% include 'sbadmin/components/footer.html' %}
+
+    </div>
+    <!-- end content wrapper -->
+  
+  </div>
+  <!-- end page wrapper -->
+
+  <!-- scroll + logout modal -->
+  {% include 'sbadmin/components/scrollLogoutModal.html' %}
+
+  <!-- scripts -->
+  {% include 'sbadmin/components/scripts.html' %}
+</body>
+</html>
