@@ -6,7 +6,8 @@ from . import views
 app_name = 'siteapp'
 
 urlpatterns = [
-  path('site/create', views.siteCreate, name='site_create'),
-  path('site/update/<id>', views.siteUpdate, name='site_update'),
-  path('sites', views.siteList, name="sites"),
+  path('create', views.siteCreate, name='site_create'),
+  path('update/<id>', views.siteUpdate, name='site_update'),
+  path('sitequery/<id>', views.siteQuery, name='site_query'),
+  path('', views.siteList, name="sites"),
 ]

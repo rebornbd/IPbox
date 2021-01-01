@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Rack
 
-# Register your models here.
+myModels = [Rack]
+admin.site.register(myModels)

@@ -1,3 +1,75 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+from siteapp.models import Site
+from .models import Rack
 
-# Create your views here.
+
+def rackList(request):
+  dataPerPage = 5
+  pageNum = request.GET.get('page', 1)
+  racks = Rack.objects.all()
+
+  p = Paginator(racks, dataPerPage)
+  page_obj = p.page(pageNum)
+
+  context = {
+    'page_obj': page_obj,
+  }
+  return render(request, 'rackapp/racks.html', context)
+
+
+def rackCreate(request):
+  if (request.POST):
+    name    = request.POST['rackname']
+    ip      = request.POST['rackip']
+    siteid  = request.POST['site']
+        
+    site    = Site.objects.get(pk=siteid)
+
+    rack    = Rack(name=name, ip=ip, site=site)
+    rack.save()
+    return redirect("/racks")
+
+  context = {
+    'sites': Site.objects.all()
+  }
+  return render(request, 'rackapp/rack_create.html', context=context)
+  
+
+def rackUpdate(request, id):
+  rack = Rack.objects.get(pk=id)
+    
+  if (request.POST):
+    name    = request.POST['rackname']
+    ip      = request.POST['rackip']
+    # siteid  = request.POST['site']
+    # site = Site.objects.get(pk=siteid)
+        
+    rack.name = name
+    rack.ip = ip
+    # rack.site = site
+    rack.save()
+    return redirect("/racks")
+    
+  context = {
+    'rack': rack,
+    'sites': Site.objects.all()
+  }
+  return render(request, 'rackapp/rack_update.html', context=context)
+
+
+def rackQuery(request, id):
+  rack = Rack.objects.get(pk=id)
+
+  dataPerPage = 5
+  pageNum = request.GET.get('page', 1)
+  blades = rack.blades.all()
+
+  p = Paginator(blades, dataPerPage)
+  page_obj = p.page(pageNum)
+
+  context = {
+    'page_obj': page_obj,
+  }
+  return render(request, 'bladeapp/blades.html', context)
+

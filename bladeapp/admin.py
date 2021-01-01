@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Blade
 
-# Register your models here.
+myModels = [Blade]
+admin.site.register(myModels)

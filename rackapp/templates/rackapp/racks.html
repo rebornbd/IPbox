@@ -2,15 +2,15 @@
 
 <!-- page heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">
-    Site
+  <h1 class="h5 mb-0 text-gray-800">
+    <a href="{% url 'siteapp:sites' %}">Site<a/> / Rack
   </h1>
 </div>
 
 <!-- table data -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table mr-2"></i> Site List</h6>
+    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table mr-2"></i> Rack List</h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -24,6 +24,8 @@
           <tr>
             <th>#</th>
             <th>Name</th>
+            <th>IP</th>
+            <th>Site</th>
             <th></th>
           </tr>
         </thead>
@@ -31,24 +33,33 @@
           <tr>
             <th></th>
             <th>Name</th>
+            <th>IP</th>
+            <th>Site</th>
             <th>
-              <a href="{% url 'siteapp:site_create' %}"
-                class="btn btn-primary btn-sm btn-block">CREATE SITE</a>
+              <a href="{% url 'rackapp:rack_create' %}"
+                class="btn btn-primary btn-sm btn-block">CREATE RACK</a>
             </th>
           </tr>
         </tfoot>
         <tbody>
-          {% for site in page_obj %}
+          {% for rack in page_obj %}
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>
-              <a href="{% url 'siteapp:site_query' site.id %}"
+              <a href="{% url 'rackapp:rack_query' rack.id %}"
                 class="text-primary">
-                {{ site.name }}
+                {{ rack.name }}
+              </a>
+            </td>
+            <td>{{ rack.ip }}</td>
+            <td>
+              <a href="{% url 'siteapp:site_query' rack.site.id %}"
+                class="text-primary">
+                {{ rack.site.name }}
               </a>
             </td>
             <td class="text-center">
-              <a href="{% url 'siteapp:site_update' site.id %}"
+              <a href="{% url 'rackapp:rack_update' rack.id %}"
                 class="text-info mr-4" title="edit">
                 <i class="fas fa-edit"></i>
               </a>

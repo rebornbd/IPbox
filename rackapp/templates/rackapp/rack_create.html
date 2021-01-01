@@ -1,0 +1,66 @@
+{% extends 'sbadmin/base.html' %} {% load static %} {% block content %}
+
+<div class="card-body">
+  <div class="container my-4">
+    <h3 class="my-4">Create Rack</h3>
+    <form method="POST" action="{% url 'rackapp:rack_create' %}">
+      {% csrf_token %}
+
+      <div class="form-group row">
+        <label for="rackname" class="col-sm-2 col-form-label">Name</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            id="rackname"
+            name="rackname"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="rackip" class="col-sm-2 col-form-label">IP</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            id="rackip"
+            name="rackip"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="site" class="col-sm-2 col-form-label">Site</label>
+        <div class="col">
+          <select class="custom-select" id="site" name="site" required>
+            <option value="" selected>choose site...</option>
+            {% for site in sites %}
+            <option value="{{ site.id }}">{{ site.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-2"></div>
+        <div class="col">
+          <div class="row">
+            <div class="col-3">
+              <a href="{% url 'rackapp:racks' %}" class="btn btn-warning btn-sm btn-block"
+                >GO TO RACK LIST</a
+              >
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-primary btn-sm btn-block">
+                CREATE
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

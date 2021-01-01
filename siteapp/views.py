@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
+from rackapp.models import Rack
 from .models import Site
 
 
 def siteList(request):
   dataPerPage = 5
-  sites = Site.objects.all()
-
   pageNum = request.GET.get('page', 1)
+  sites = Site.objects.all()
   
   p = Paginator(sites, dataPerPage)
   page_obj = p.page(pageNum)
@@ -42,5 +42,17 @@ def siteUpdate(request, id):
   return render(request, 'siteapp/site_update.html', context)
 
 
-def home(request):
-  return render(request, 'siteapp/sites.html')
+def siteQuery(request, id):
+  site = Site.objects.get(pk=id)
+
+  dataPerPage = 5
+  pageNum = request.GET.get('page', 1)
+  racks = site.racks.all()
+
+  p = Paginator(racks, dataPerPage)
+  page_obj = p.page(pageNum)
+
+  context = {
+    'page_obj': page_obj,
+  }
+  return render(request, 'rackapp/racks.html', context)
