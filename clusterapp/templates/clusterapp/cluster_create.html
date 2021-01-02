@@ -1,0 +1,81 @@
+{% extends 'sbadmin/base.html' %} {% load static %} {% block content %}
+
+<div class="card-body">
+  <div class="container my-4">
+    <h3 class="my-4">Create Cluster</h3>
+    <form method="POST" action="{% url 'clusterapp:cluster_create' %}">
+      {% csrf_token %}
+
+      <div class="form-group row">
+        <label for="clustername" class="col-sm-2 col-form-label">Name</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            id="clustername"
+            name="clustername"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="clusterip" class="col-sm-2 col-form-label">IP</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            id="clusterip"
+            name="clusterip"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="clusterlb_ip" class="col-sm-2 col-form-label">LB IP</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            id="clusterlb_ip"
+            name="clusterlb_ip"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="clusterbootstrap" class="col-sm-2 col-form-label"
+          >Bootstrap IP</label
+        >
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            id="clusterbootstrap"
+            name="clusterbootstrap"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-2"></div>
+        <div class="col">
+          <div class="row">
+            <div class="col-3">
+              <a href="{% url 'clusterapp:clusters' %}" class="btn btn-warning btn-sm btn-block"
+                >GO TO CLUSTER LIST</a
+              >
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-primary btn-sm btn-block">
+                CREATE
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

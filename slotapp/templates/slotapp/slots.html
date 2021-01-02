@@ -4,14 +4,15 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h5 mb-0 text-gray-800">
     <a href="{% url 'siteapp:sites' %}">Site<a/> / 
-    <a href="{% url 'rackapp:racks' %}">Rack<a/> / Blade
+    <a href="{% url 'rackapp:racks' %}">Rack<a/> / 
+    <a href="{% url 'bladeapp:blades' %}">Blade<a/> / Slot
   </h1>
 </div>
 
 <!-- table data -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table mr-2"></i> Blade List</h6>
+    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table mr-2"></i> Slot List</h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -26,7 +27,7 @@
             <th>#</th>
             <th>Name</th>
             <th>IP</th>
-            <th>Rack</th>
+            <th>Blade</th>
             <th></th>
           </tr>
         </thead>
@@ -35,32 +36,32 @@
             <th></th>
             <th>Name</th>
             <th>IP</th>
-            <th>Rack</th>
+            <th>Blade</th>
             <th>
-              <a href="{% url 'bladeapp:blade_create' %}"
-                class="btn btn-primary btn-sm btn-block">CREATE BLADE</a>
+              <a href="{% url 'slotapp:slot_create' %}"
+                class="btn btn-primary btn-sm btn-block">CREATE SLOT</a>
             </th>
           </tr>
         </tfoot>
         <tbody>
-          {% for blade in page_obj %}
+          {% for slot in page_obj %}
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>
-              <a href="{% url 'bladeapp:blade_query' blade.id %}"
+              <a href="{% url 'slotapp:slot_query' slot.id %}"
                 class="text-primary">
-                {{ blade.name }}
+                {{ slot.name }}
               </a>
             </td>
-            <td>{{ blade.ip }}</td>
+            <td>{{ slot.ip }}</td>
             <td>
-              <a href="{% url 'rackapp:rack_query' blade.rack.id %}"
+              <a href="{% url 'bladeapp:blade_query' slot.blade.id %}"
                 class="text-primary">
-                {{ blade.rack.name }}
+                {{ slot.blade.name }}
               </a>
             </td>
             <td class="text-center">
-              <a href="{% url 'bladeapp:blade_update' blade.id %}"
+              <a href="{% url 'slotapp:slot_update' slot.id %}"
                 class="text-info mr-4" title="edit">
                 <i class="fas fa-edit"></i>
               </a>

@@ -20,8 +20,57 @@ def bladeList(request):
 
 
 def bladeCreate(request):
-  pass
+  if (request.POST):
+    name    = request.POST['bladename']
+    ip      = request.POST['bladeip']
+    rackid  = request.POST['rack']
+        
+    rack    = Rack.objects.get(pk=rackid)
+
+    blade   = Blade(name=name, ip=ip, rack=rack)
+    blade.save()
+    return redirect("/blades")
+
+  context = {
+    'racks': Rack.objects.all()
+  }
+  return render(request, 'bladeapp/blade_create.html', context=context)
+
 
 def bladeUpdate(request, id):
-  pass
+  blade = Blade.objects.get(pk=id)
+    
+  if (request.POST):
+    name    = request.POST['bladename']
+    ip      = request.POST['bladeip']
+    rackid  = request.POST['rack']
 
+    rack = Rack.objects.get(pk=rackid)
+    
+    blade.name = name
+    blade.ip = ip
+    blade.rack = rack
+    blade.save()
+    return redirect("/blades")
+    
+  context = {
+    'blade': blade,
+    'racks': Rack.objects.all()
+  }
+  return render(request, 'bladeapp/blade_update.html', context=context)
+
+
+def bladeQuery(request, id):
+  blade = Blade.objects.get(pk=id)
+
+  dataPerPage = 5
+  pageNum = request.GET.get('page', 1)
+  slots = blade.slots.all()
+
+  p = Paginator(slots, dataPerPage)
+  page_obj = p.page(pageNum)
+
+  context = {
+    'page_obj': page_obj,
+  }
+  return render(request, 'slotapp/slots.html', context)

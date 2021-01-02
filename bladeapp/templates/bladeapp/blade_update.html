@@ -1,0 +1,68 @@
+{% extends 'sbadmin/base.html' %} {% load static %} {% block content %}
+
+<div class="card-body">
+  <div class="container my-4">
+    <h3 class="my-4">Update Blade</h3>
+    <form method="POST" action="{% url 'bladeapp:blade_update' blade.id %}">
+      {% csrf_token %}
+
+      <div class="form-group row">
+        <label for="bladename" class="col-sm-2 col-form-label">Name</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            value="{{ blade.name }}"
+            id="bladename"
+            name="bladename"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="bladeip" class="col-sm-2 col-form-label">IP</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            value="{{ blade.ip }}"
+            id="bladeip"
+            name="bladeip"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="rack" class="col-sm-2 col-form-label">Rack</label>
+        <div class="col">
+          <select class="custom-select" id="rack" name="rack" required>
+            <option value="">choose rack...</option>
+            {% for rack in racks %}
+              <option value="{{ rack.id }}" {% if blade.rack.id == rack.id %} selected{% endif %}>{{ rack.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-2"></div>
+        <div class="col">
+          <div class="row">
+            <div class="col-3">
+              <a href="{% url 'bladeapp:blades' %}" class="btn btn-warning btn-sm btn-block"
+                >GO TO BLADE LIST</a
+              >
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-primary btn-sm btn-block">
+                UPDATE
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

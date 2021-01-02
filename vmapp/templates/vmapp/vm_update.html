@@ -1,0 +1,92 @@
+{% extends 'sbadmin/base.html' %} {% load static %} {% block content %}
+
+<div class="card-body">
+  <div class="container my-4">
+    <h3 class="my-4">Update VM</h3>
+    <form method="POST" action="{% url 'vmapp:vm_update' vm.id %}">
+      {% csrf_token %}
+
+      <div class="form-group row">
+        <label for="vmname" class="col-sm-2 col-form-label">Name</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            value="{{ vm.name }}"
+            id="vmname"
+            name="vmname"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="vmhostname" class="col-sm-2 col-form-label">Hostname</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            value="{{ vm.hostname }}"
+            id="vmhostname"
+            name="vmhostname"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="vmip" class="col-sm-2 col-form-label">IP</label>
+        <div class="col">
+          <input
+            type="text"
+            class="form-control"
+            value="{{ vm.ip }}"
+            id="vmip"
+            name="vmip"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="slot" class="col-sm-2 col-form-label">Slot</label>
+        <div class="col">
+          <select class="custom-select" id="slot" name="slot" required>
+            <option value="">choose slot...</option>
+            {% for slot in slots %}
+            <option value="{{ slot.id }}" {% if vm.slot.id == slot.id %} selected {% endif %}>{{ slot.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="cluster" class="col-sm-2 col-form-label">Cluster</label>
+        <div class="col">
+          <select class="custom-select" id="cluster" name="cluster">
+            <option value="">choose cluster...</option>
+            {% for cluster in clusters %}
+            <option value="{{ cluster.id }}" {% if vm.cluster.id == cluster.id %} selected {% endif %}>{{ cluster.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-2"></div>
+        <div class="col">
+          <div class="row">
+            <div class="col-3">
+              <a href="{% url 'vmapp:vms' %}" class="btn btn-warning btn-sm btn-block"
+                >GO TO VM LIST</a
+              >
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-primary btn-sm btn-block">
+                UPDATE
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}
