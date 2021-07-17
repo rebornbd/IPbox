@@ -25,7 +25,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # installed apps
+
     # created apps
+    'accounts.apps.AccountsConfig',
     'siteapp.apps.SiteappConfig',
     'rackapp.apps.RackappConfig',
     'bladeapp.apps.BladeappConfig',
