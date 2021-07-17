@@ -15,6 +15,7 @@
     <div class="topbar-divider d-none d-sm-block"></div>
 
     <!-- nav item - user information -->
+    {% if user.is_authenticated %}
     <li class="nav-item dropdown no-arrow">
       <a
         class="nav-link dropdown-toggle"
@@ -26,7 +27,7 @@
         aria-expanded="false"
       >
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-          Username
+          {{user.username}}
         </span>
         <img
           class="img-profile rounded-circle"
@@ -62,6 +63,9 @@
         </a>
       </div>
     </li>
+    {% else %}
+      <a href="{% url 'accountsapp:login' %}">Login</a>
+    {% endif %}
   </ul>
 </nav>
 <!-- end top navbar -->
