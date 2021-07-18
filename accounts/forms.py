@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(
-        widget = forms.TextInput(attrs={'placeholder': 'enter username'}),
+        widget = forms.TextInput(attrs={'placeholder': 'enter username', 'class': 'form-control'}),
         max_length=50, required=True,
         label='',
         help_text='',
@@ -13,7 +13,7 @@ class SignUpForm(UserCreationForm):
         # help_text='enter a valid username!'
     )
     email = forms.CharField(
-        widget = forms.EmailInput(attrs={'placeholder': 'enter email'}),
+        widget = forms.EmailInput(attrs={'placeholder': 'enter email', 'class': 'form-control'}),
         max_length=200, required=False,
         label='',
         help_text='',
@@ -21,14 +21,14 @@ class SignUpForm(UserCreationForm):
         # help_text='enter a valid email!'
     )
     password1 = forms.CharField(
-        widget = forms.PasswordInput(attrs={'placeholder': 'enter password'}),
+        widget = forms.PasswordInput(attrs={'placeholder': 'enter password', 'class': 'form-control'}),
         label = '',
         help_text = ''
         # label = 'Password ',
         # help_text = 'enter a valid password!'
     )
     password2 = forms.CharField(
-        widget = forms.PasswordInput(attrs={'placeholder': 'enter confirm password'}),
+        widget = forms.PasswordInput(attrs={'placeholder': 'enter confirm password', 'class': 'form-control'}),
         label = '',
         help_text = ''
         # label = 'Confirm password ',

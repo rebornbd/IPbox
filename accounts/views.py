@@ -8,6 +8,8 @@ from .forms import SignUpForm
 
 # login
 def mylogin(request):
+    invalidLogin = False
+
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('homepage'))
     
@@ -19,8 +21,10 @@ def mylogin(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(reverse('homepage'))
+        
+        invalidLogin = True
     
-    return render(request, 'registration/login.html')
+    return render(request, 'registration/login.html', context={'invalidLogin': invalidLogin})
 
 
 # logout
@@ -35,7 +39,7 @@ def mylogout(request):
 # signup
 def mysignup(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('urlname'))
+        return HttpResponseRedirect(reverse('homepage'))
 
     if request.method == 'POST':
         form = SignUpForm(request.POST)
