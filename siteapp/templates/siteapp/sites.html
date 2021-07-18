@@ -40,13 +40,13 @@
 					{% for site in page_obj %}
 					<tr>
 						<td>{{ forloop.counter }}</td>
-
-						{% if adminUser %}
 						<td>
 							<a href="{% url 'siteapp:site_query' site.id %}" class="text-primary">
 								{{ site.name }}
 							</a>
 						</td>
+
+						{% if adminUser %}
 						<td class="text-center">
 							<a href="{% url 'siteapp:site_update' site.id %}" class="text-info mr-4" title="edit">
 								<i class="fas fa-edit"></i>
@@ -56,12 +56,8 @@
 								<i class="fas fa-trash-alt"></i>
 							</a>
 						</td>
+						
 						{% else %}
-						<td>
-							<a href="{% url 'siteapp:site_query' site.id %}" class="text-primary">
-								{{ site.name }}
-							</a>
-						</td>
 						<td class="text-center">
 							<span class="text-info mr-4 customNotAllowed" title="edit">
 								<i class="fas fa-edit"></i>

@@ -1,5 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
+from django.urls import reverse
+
+from accounts.views import generalUser, adminUser
 from siteapp.models import Site
 from .models import Rack
 
@@ -14,11 +19,17 @@ def rackList(request):
 
   context = {
     'page_obj': page_obj,
+    'generalUser': generalUser(request.user),
+    'adminUser': adminUser(request.user)
   }
-  return render(request, 'rackapp/racks.html', context)
+  return render(request, 'rackapp/racks.html', context=context)
 
 
+@login_required(login_url='accountsapp:login')
 def rackCreate(request):
+  if not adminUser(request.user):
+    return HttpResponseRedirect(reverse('homepage'))
+  
   if (request.POST):
     name    = request.POST['rackname']
     ip      = request.POST['rackip']
@@ -34,11 +45,14 @@ def rackCreate(request):
     'sites': Site.objects.all()
   }
   return render(request, 'rackapp/rack_create.html', context=context)
-  
 
+
+@login_required(login_url='accountsapp:login')
 def rackUpdate(request, id):
+  if not adminUser(request.user):
+    return HttpResponseRedirect(reverse('homepage'))
+
   rack = Rack.objects.get(pk=id)
-    
   if (request.POST):
     name    = request.POST['rackname']
     ip      = request.POST['rackip']
@@ -58,6 +72,7 @@ def rackUpdate(request, id):
   return render(request, 'rackapp/rack_update.html', context=context)
 
 
+@login_required(login_url='accountsapp:login')
 def rackQuery(request, id):
   rack = Rack.objects.get(pk=id)
 
