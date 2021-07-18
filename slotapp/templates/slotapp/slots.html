@@ -38,8 +38,12 @@
             <th>IP</th>
             <th>Blade</th>
             <th>
-              <a href="{% url 'slotapp:slot_create' %}"
-                class="btn btn-primary btn-sm btn-block">CREATE SLOT</a>
+              {% if adminUser %}
+                <a href="{% url 'slotapp:slot_create' %}"
+                  class="btn btn-primary btn-sm btn-block">CREATE SLOT</a>
+              {% else %}
+                <div class="btn btn-primary btn-sm btn-block disabled customNotAllowed">CREATE SLOT</div>
+							{% endif %}
             </th>
           </tr>
         </tfoot>
@@ -61,14 +65,25 @@
               </a>
             </td>
             <td class="text-center">
-              <a href="{% url 'slotapp:slot_update' slot.id %}"
-                class="text-info mr-4" title="edit">
-                <i class="fas fa-edit"></i>
-              </a>
+              {% if adminUser %}
+                <a href="{% url 'slotapp:slot_update' slot.id %}"
+                  class="text-info mr-4" title="edit">
+                  <i class="fas fa-edit"></i>
+                </a>
 
-              <a href="#" class="text-danger ml-4" title="delete">
-                <i class="fas fa-trash-alt"></i>
-              </a>
+                <a href="#" class="text-danger ml-4" title="delete">
+                  <i class="fas fa-trash-alt"></i>
+                </a>
+              {% else %}
+                <!-- non-admin user -->
+                <span class="text-info mr-4 customNotAllowed" title="edit">
+                  <i class="fas fa-edit"></i>
+                </span>
+  
+                <span class="text-danger ml-4 customNotAllowed" title="delete">
+                  <i class="fas fa-trash-alt"></i>
+                </span>
+              {% endif %}
             </td>
           </tr>
           {% endfor %}
