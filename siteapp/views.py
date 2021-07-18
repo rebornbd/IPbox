@@ -42,8 +42,10 @@ def siteCreate(request):
 
 @login_required(login_url='accountsapp:login')
 def siteUpdate(request, id):
-  site = Site.objects.get(pk=id)
+  if not adminUser(request.user):
+    return HttpResponseRedirect(reverse('homepage'))
 
+  site = Site.objects.get(pk=id)
   if (request.POST):
     site.name = request.POST['sitename']
     site.save()
@@ -55,6 +57,7 @@ def siteUpdate(request, id):
   return render(request, 'siteapp/site_update.html', context)
 
 
+@login_required(login_url='accountsapp:login')
 def siteQuery(request, id):
   site = Site.objects.get(pk=id)
 
