@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
@@ -24,7 +26,11 @@ def siteList(request):
   return render(request, 'siteapp/sites.html', context=context)
 
 
+@login_required(login_url='accountsapp:login')
 def siteCreate(request):
+  if not adminUser(request.user):
+    return HttpResponseRedirect(reverse('homepage'))
+
   if (request.POST):
     name = request.POST['sitename']
 
@@ -34,6 +40,7 @@ def siteCreate(request):
   return render(request, 'siteapp/site_create.html')
 
 
+@login_required(login_url='accountsapp:login')
 def siteUpdate(request, id):
   site = Site.objects.get(pk=id)
 

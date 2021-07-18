@@ -31,7 +31,7 @@
 							<a href="{% url 'siteapp:site_create' %}" class="btn btn-primary btn-sm btn-block">CREATE
 								SITE</a>
 							{% else %}
-							<div class="btn btn-primary btn-sm btn-block disabled">CREATE SITE</div>
+							<div class="btn btn-primary btn-sm btn-block disabled customNotAllowed">CREATE SITE</div>
 							{% endif %}
 						</th>
 					</tr>
@@ -63,11 +63,11 @@
 							</a>
 						</td>
 						<td class="text-center">
-							<span class="text-info mr-4" title="edit">
+							<span class="text-info mr-4 customNotAllowed" title="edit">
 								<i class="fas fa-edit"></i>
 							</span>
 
-							<span class="text-danger ml-4" title="delete">
+							<span class="text-danger ml-4 customNotAllowed" title="delete">
 								<i class="fas fa-trash-alt"></i>
 							</span>
 						</td>
