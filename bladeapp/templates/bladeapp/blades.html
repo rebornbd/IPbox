@@ -37,9 +37,13 @@
             <th>IP</th>
             <th>Rack</th>
             <th>
-              <a href="{% url 'bladeapp:blade_create' %}"
-                class="btn btn-primary btn-sm btn-block">CREATE BLADE</a>
-            </th>
+              {% if adminUser %}
+                <a href="{% url 'bladeapp:blade_create' %}"
+                  class="btn btn-primary btn-sm btn-block">CREATE BLADE</a>
+              {% else %}
+                <div class="btn btn-primary btn-sm btn-block disabled customNotAllowed">CREATE BLADE</div>
+							{% endif %}
+              </th>
           </tr>
         </tfoot>
         <tbody>
@@ -60,14 +64,25 @@
               </a>
             </td>
             <td class="text-center">
-              <a href="{% url 'bladeapp:blade_update' blade.id %}"
-                class="text-info mr-4" title="edit">
-                <i class="fas fa-edit"></i>
-              </a>
+              {% if adminUser %}
+                <a href="{% url 'bladeapp:blade_update' blade.id %}"
+                  class="text-info mr-4" title="edit">
+                  <i class="fas fa-edit"></i>
+                </a>
 
-              <a href="#" class="text-danger ml-4" title="delete">
-                <i class="fas fa-trash-alt"></i>
-              </a>
+                <a href="#" class="text-danger ml-4" title="delete">
+                  <i class="fas fa-trash-alt"></i>
+                </a>
+              {% else %}
+                <!-- non-admin user -->
+                <span class="text-info mr-4 customNotAllowed" title="edit">
+                  <i class="fas fa-edit"></i>
+                </span>
+  
+                <span class="text-danger ml-4 customNotAllowed" title="delete">
+                  <i class="fas fa-trash-alt"></i>
+                </span>
+              {% endif %}
             </td>
           </tr>
           {% endfor %}
