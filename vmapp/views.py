@@ -1,7 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator
-from slotapp.models import Slot
+from django.urls import reverse
+
+from accounts.views import generalUser, adminUser
 from clusterapp.models import Cluster
+from slotapp.models import Slot
 from .models import VM
 
 
@@ -15,11 +20,17 @@ def vmList(request):
 
   context = {
     'page_obj': page_obj,
+    'generalUser': generalUser(request.user),
+    'adminUser': adminUser(request.user)
   }
   return render(request, 'vmapp/vms.html', context)
 
 
+@login_required(login_url='accountsapp:login')
 def vmCreate(request):
+  if not adminUser(request.user):
+    return HttpResponseRedirect(reverse('homepage'))
+  
   if (request.POST):
     name      = request.POST['vmname']
     hostname  = request.POST['vmhostname']
@@ -45,9 +56,12 @@ def vmCreate(request):
   return render(request, 'vmapp/vm_create.html', context=context)
 
 
+@login_required(login_url='accountsapp:login')
 def vmUpdate(request, id):
+  if not adminUser(request.user):
+    return HttpResponseRedirect(reverse('homepage'))
+  
   vm = VM.objects.get(pk=id)
-    
   if (request.POST):
     name        = request.POST['vmname']
     hostname    = request.POST['vmhostname']
